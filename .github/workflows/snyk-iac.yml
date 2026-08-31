@@ -23,5 +23,5 @@ jobs:
           file: main.tf
           framework: terraform
           soft_fail: true
-          var_file: "--skip-download"
+          var_file: --skip-download
           
