@@ -1,7 +1,7 @@
-name: Snyk Infrastructure as Code
+name: Snyk and Checkov Infrastructure as Code
 on: push
 jobs:
-  security:
+  snyk-security:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -11,3 +11,15 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: main.tf
+        continue-on-error: true
+
+  checkov-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Checkov to check Terraform for issues
+        uses: bridgecrewio/checkov-action@master
+        with:
+          file: main.tf
+          framework: terraform
+          soft_fail: true
